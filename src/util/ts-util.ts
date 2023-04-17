@@ -143,6 +143,7 @@ export function getDefineArrayLiteralExpression(sourceFile: TS.SourceFile, conte
 		case typescript.ModuleKind.ES2015:
 		case typescript.ModuleKind.ES2020:
 		case typescript.ModuleKind.ES2022:
+		case typescript.ModuleKind.NodeNext:
 			// There are no such thing for these module types
 			return undefined;
 
@@ -285,7 +286,8 @@ export function isImportedSymbolImported(importedSymbol: ImportedSymbol, rootBlo
 		case typescript.ModuleKind.ES2022:
 		case typescript.ModuleKind.ES2020:
 		case typescript.ModuleKind.ES2015:
-		case typescript.ModuleKind.ESNext: {
+		case typescript.ModuleKind.ESNext:
+		case typescript.ModuleKind.NodeNext: {
 			for (const statement of rootBlock.statements) {
 				if (!typescript.isImportDeclaration(statement)) continue;
 				if (!typescript.isStringLiteralLike(statement.moduleSpecifier)) {
@@ -357,7 +359,8 @@ export function generateImportStatementForImportedSymbolInContext(importedSymbol
 		case typescript.ModuleKind.ES2022:
 		case typescript.ModuleKind.ES2020:
 		case typescript.ModuleKind.ES2015:
-		case typescript.ModuleKind.ESNext: {
+		case typescript.ModuleKind.ESNext:
+		case typescript.ModuleKind.NodeNext: {
 			return factory.createImportDeclaration(
 				undefined,
 				"isDefaultImport" in importedSymbol
